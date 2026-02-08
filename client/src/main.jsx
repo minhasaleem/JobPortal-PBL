@@ -1,4 +1,5 @@
-import { StrictMode } from 'react'
+// console.log('ENV CHECK:', import.meta.env)
+// console.log('Clerk key:', import.meta.env.VITE_CLERK_PUBLISHABLE_KEY)
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -14,6 +15,7 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById('root')).render(
   <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      {/* <ClerkProvider publishableKey={PUBLISHABLE_KEY}> */}
   <BrowserRouter>
   <AppContextProvider>
     <App />
