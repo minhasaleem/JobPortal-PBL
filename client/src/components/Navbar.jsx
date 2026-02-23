@@ -1,12 +1,15 @@
 import { assets } from '../assets/assets'
 import { Link, useNavigate } from 'react-router-dom'
 import { useClerk, useUser, UserButton } from '@clerk/clerk-react'
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const Navbar = () => {
   const { openSignIn } = useClerk()
   const { user, isLoaded } = useUser()
 
   const navigate = useNavigate()
+  const {setShowRecruiterLogin} = useContext(AppContext)
 
   // ⛔ wait until Clerk is fully loaded
   if (!isLoaded) return null
@@ -24,7 +27,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex gap-4 items-center max-sm:text-xs">
-            <button className="text-gray-600">
+            <button onClick={e => setShowRecruiterLogin(true)} className="text-gray-600">
               Recruiter Login
             </button>
 
