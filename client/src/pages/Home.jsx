@@ -8,13 +8,13 @@ import Footer from '../components/Footer'
 const Home = () => {
   return (
     <div>
-      <Navbar/>
+      <Navbar/>   
       <Hero/>
       <JobListing/>
       <AppDownload/>
       <Footer/>
     </div>
-  )
+  ) 
 }
 
 export default Home
