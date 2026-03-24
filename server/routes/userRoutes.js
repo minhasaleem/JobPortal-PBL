@@ -1,7 +1,10 @@
 import express from 'express'
 import { applyForJob, getUserData, updateUserResume ,getUserJobApplications } from '../controllers/userController.js'
+import multer from 'multer'
 
 const router = express.Router()
+const storage = multer.diskStorage({})
+const upload = multer({storage})
 
 //Get user Data
 router.get('/user',getUserData)

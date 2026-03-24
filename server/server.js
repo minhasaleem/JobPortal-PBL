@@ -19,13 +19,16 @@ import {clerkMiddleware} from '@clerk/express'
 const app = express()
 
 //Connect to database
-await connectDB()
-await connectCloudinary()
+// await connectDB()
+// await connectCloudinary()
 
 //Middlewares
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
 app.use(express.json())
-app.use(clerkMiddleware())
+// app.use(clerkMiddleware())
 
 //Routes
 app.get('/',(req,res)=>res.send("API working"))
@@ -34,14 +37,22 @@ app.get("/debug-sentry", function mainHandler(req, res) {
 });
 app.post('/webhooks',clerkWebHooks)
 app.use('/api/company',companyRoutes)
-app.use('/api/jobs',jobRoutes)
-app.use('/api/users',userRoutes)
+app.use('/api/jobs',clerkMiddleware(),jobRoutes)
+app.use('/api/users',clerkMiddleware(), userRoutes)
 
 //Port
 const PORT = process.env.PORT || 5000
 
 Sentry.setupExpressErrorHandler(app);
 
-app.listen( PORT,()=>{
+// app.listen( PORT,()=>{
+//     console.log(`Server is running on port ${PORT}`)
+// })
+
+await connectDB()
+await connectCloudinary()
+
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
+

@@ -53,15 +53,64 @@ export const registerCompany = async (req,res) =>{
 }
 
 //Company login
+// export const loginCompany = async (req,res) => {
+
+//    const {email,password}  = req.body
+//    try {
+//       const company =  await Company.findOne({email})
+
+//       if(bcrypt.compare(password,company.password)){
+
+//          res.json({
+//             success:true,
+//             company:{
+//                _id: company._id,
+//                name: company.name,
+//                email: company.email,
+//                image: company.image,
+//                date: Date.now()
+//             },
+//             token:generateToken(company._id)
+//          })
+
+//       }
+//       else{
+//          res.json({
+//             success:false,message:'Invalid email or password'
+//          })
+//       }
+//    } catch (error) {
+//       res.json({success:false,message:error.message})
+//    }
+
+// }
+//error fix:
 export const loginCompany = async (req,res) => {
+// console.log("🔥 LOGIN HIT", req.body)
 
    const {email,password}  = req.body
+
    try {
-      const company =  await Company.findOne({email})
+      const company = await Company.findOne({email})
 
-      if(bcrypt.compare(password,company.password)){
+      // 🔴 check if company exists
+      if (!company) {
+         return res.json({ success: false, message: "Company not found" })
+      }
+ if (!company.password) {
+         console.log("❌ No password found in DB")
+         return res.status(500).json({
+            success:false,
+            message:"Company password missing"
+         })
+      }
+      // 🔴 await is REQUIRED
+      const isMatch = await bcrypt.compare(password, company.password)
 
-         res.json({
+      // console.log("👉 isMatch:", isMatch)
+
+      if (isMatch) {
+         return res.json({
             success:true,
             company:{
                _id: company._id,
@@ -72,18 +121,19 @@ export const loginCompany = async (req,res) => {
             },
             token:generateToken(company._id)
          })
-
-      }
-      else{
-         res.json({
-            success:false,message:'Invalid email or password'
+      } 
+        return res.json({
+            success:false,
+            message:'Invalid email or password'
          })
-      }
-   } catch (error) {
-      res.json({success:false,message:error.message})
-   }
+      
 
+   } catch (error) {
+      console.log("LOGIN ERROR:",error) // 👈 add this
+      return res.status(500).json({ success:false, message:error.message })
+   }
 }
+
 
 //Get company data
 export const getCompanyData = async (req,res) => {
