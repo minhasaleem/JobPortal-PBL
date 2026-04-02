@@ -35,8 +35,7 @@ const RecruiterLogin = () => {
             //   email,
             //   password
             // })
-        const { data } = await axios.post(
-  'http://127.0.0.1:5000/api/company/login',
+        const { data } = await axios.post('http://127.0.0.1:5000/api/company/login',
   { email, password }
 )
 
@@ -70,8 +69,9 @@ const RecruiterLogin = () => {
           }
 
         } catch (error) {
-          toast.error(error.message)
-        }
+  toast.error(error.message)
+}
+
     }
 
     useEffect(()=>{
