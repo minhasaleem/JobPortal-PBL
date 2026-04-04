@@ -4,6 +4,7 @@ import {v2 as cloudinary} from 'cloudinary'
 import generateToken from "../utils/generateToken.js";
 import Job from '../models/Job.js'
 import JobApplication from '../models/JobApplication.js'
+import crypto from "crypto"
 
 //Register a new company
 export const registerCompany = async (req,res) =>{
@@ -148,7 +149,19 @@ export const postJob = async (req,res) => {
 
 //Get Company Job Applicants
 export const getCompanyJobApplicants = async (req,res) =>{
+   try {
+      const companyId = req.company._id
 
+      //Find job applications for the user and populate related data
+      const applications = await JobApplication.find({companyId})
+      .populate('userId','name image resume')
+      .populate('jobId','title location category level salary')
+      .exec()
+
+      return res.json({success:true,applications})
+   } catch (error) {
+      res.json({success:false,message:error.message})
+   }
 }
 
 //Get Company Posted Jobs
@@ -174,6 +187,17 @@ export const getCompanyPostedJobs = async (req,res) =>{
 //Change Job Application Status
 export const ChangeJobApplicationsStatus = async (req,res) =>{
 
+   try {
+      const {id,status} = req.body
+
+   //Find Job application and update status
+   await JobApplication.findOneAndUpdate({_id : id},{status})
+
+   res.json({success:true,message:'Status Changed'})
+
+   } catch (error) {
+      res.json({success:false,message:error.message})
+   }
 }
 
 //Change Job Visibility
@@ -197,4 +221,85 @@ export const ChangeVisibility = async (req,res) => {
    } catch (error) {
       res.json({success:false,message:error.message})
    }
+}
+//for forgot password
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body
+
+    const company = await Company.findOne({ email })
+
+    if (!company) {
+      return res.json({ success: false, message: "Email not found" })
+    }
+
+    const token = crypto.randomBytes(32).toString("hex")
+
+    company.resetToken = token
+    company.resetTokenExpire = Date.now() + 15 * 60 * 1000
+
+    await company.save()
+
+    const resetLink = `http://localhost:5173/reset-password/${token}`
+
+    console.log("RESET LINK:", resetLink)
+
+    res.json({
+      success: true,
+      message: "Reset link generated",
+      resetLink
+    })
+
+  } catch (error) {
+    res.json({ success: false, message: error.message })
+  }
+}
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body
+
+    const company = await Company.findOne({
+      resetToken: token,
+      resetTokenExpire: { $gt: Date.now() }
+    })
+
+    if (!company) {
+      return res.json({ success: false, message: "Invalid or expired token" })
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    company.password = await bcrypt.hash(newPassword, salt)
+
+    company.resetToken = undefined
+    company.resetTokenExpire = undefined
+
+    await company.save()
+
+    res.json({ success: true, message: "Password reset successful" })
+
+  } catch (error) {
+    res.json({ success: false, message: error.message })
+  }
+}
+export const getCompanyByToken = async (req, res) => {
+  try {
+    const { token } = req.params
+
+    const company = await Company.findOne({
+      resetToken: token,
+      resetTokenExpire: { $gt: Date.now() }
+    })
+
+    if (!company) {
+      return res.json({ success: false, message: "Invalid or expired token" })
+    }
+
+    res.json({
+      success: true,
+      email: company.email
+    })
+
+  } catch (error) {
+    res.json({ success: false, message: error.message })
+  }
 }

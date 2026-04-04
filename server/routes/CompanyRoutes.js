@@ -2,6 +2,10 @@ import express from 'express'
 import { ChangeJobApplicationsStatus, ChangeVisibility, getCompanyData, getCompanyJobApplicants, getCompanyPostedJobs, loginCompany, postJob, registerCompany } from '../controllers/companyController.js'
 import upload from '../config/multer.js'
 import { protectCompany } from '../middleware/authMiddleware.js'
+//forgot password
+import { forgotPassword, resetPassword } from '../controllers/companyController.js'
+import { getCompanyByToken } from '../controllers/companyController.js'
+
 
 const router = express.Router()
 
@@ -28,5 +32,12 @@ router.post('/change-status',protectCompany,ChangeJobApplicationsStatus)
 
 //Change Applications Visibility
 router.post('/change-visibility',protectCompany,ChangeVisibility)
+
+//forgot password
+router.post('/forgot-password', forgotPassword)
+router.post('/reset-password', resetPassword)
+router.get('/reset-password/:token', getCompanyByToken)
+
+
 
 export default router

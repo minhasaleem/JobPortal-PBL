@@ -1,49 +1,30 @@
-import JobApplication from "../models/jobApplication.js"
+import JobApplication from "../models/JobApplication.js"
 import User from "../models/User.js"
 import Job from "../models/Job.js"
 import {v2 as cloudinary} from "cloudinary"
 
+export const getUserData = async (req, res) => {
+  try {
+    const { userId, sessionClaims } = req.auth;
 
-//Get user data
-// export const getUserData = async (req,res)=>{
+    let user = await User.findById(userId); // ✅ use _id
 
-//     const userId = req.auth.userId
-
-//     try {
-//         const user = await User.findById(userId)
-
-//         if(!user){
-//             return res.json({success:false,message:'User not found'})
-//         }
-
-//         res.json({success:true,user})
-//     } catch (error) {
-//         res.json({success:false,message:error.message})
-//     }
-// }
-export const getUserData = async (req,res)=>{
-
-    const userId = req.auth.userId
-
-    try {
-        let user = await User.findOne({ clerkId: userId })
-
-        // 🔥 FIX: create user if not exists
-        if (!user) {
-            user = await User.create({
-                clerkId: userId,
-                email: req.auth.sessionClaims.email
-            })
-        }
-
-        res.json({ success:true, user })
-
-    } catch (error) {
-        res.json({ success:false, message:error.message })
+    if (!user) {
+      user = await User.create({
+        _id: userId,
+        email: sessionClaims?.email || userId + "@clerk.dev",
+        name: "User",
+        image: "",
+        resume: ""
+      });
     }
-}
 
+    res.json({ success: true, user });
 
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
 
 //Apply for a job
 export const applyForJob = async (req,res) =>{
@@ -95,26 +76,33 @@ export const getUserJobApplications = async (req,res) => {
     }
 }
 
-//update user profile(resume)
-export const updateUserResume = async (req,res) => {
-    try {
-        const userId = req.auth.userId
+export const updateUserResume = async (req, res) => {
+  try {
+    const { userId } = req.auth;
 
-        const resumeFile = req.resumeFile
+    const userData = await User.findById(userId); // ✅ use _id
 
-        // const userData = await User.findById(userId)
-        const userData = await User.findOne({ clerkId: userId })
-
-
-        if(resumeFile){
-            const resumeUpload = await cloudinary.uploader.upload(resumeFile.path)
-            userData.resume = resumeUpload.secure_url
-        }
-
-        await userData.save()
-
-        return res.json({success:true,message:'Resume Updated'})
-    } catch (error) {
-      res.json({success:false,message:error.message})   
+    if (!userData) {
+      return res.json({ success: false, message: "User not found" });
     }
-}
+
+    if (!req.file) {
+      return res.json({ success: false, message: "No file received" });
+    }
+
+    const upload = await cloudinary.uploader.upload(req.file.path, {
+  resource_type: "auto",   // ✅ THIS is the real fix
+});
+
+    console.log("NEW RESUME URL:", upload.secure_url)
+
+    userData.resume = upload.secure_url;
+
+    await userData.save();
+
+    res.json({ success: true, message: "Resume Updated", resume: userData.resume });
+
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
