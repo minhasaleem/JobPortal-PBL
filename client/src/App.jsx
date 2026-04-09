@@ -10,6 +10,7 @@ import AddJob from './pages/AddJob'
 import ManageJobs from './pages/ManageJobs'
 import ViewApplications from './pages/ViewApplications'
 import ResetPassword from './pages/ResetPassword'
+import AdminDashboard from './pages/AdminDashboard'
 import 'quill/dist/quill.snow.css'
 import { ToastContainer } from 'react-toastify'
 
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/apply-job/:id' element={<ApplyJob />} />
         <Route path='/applications' element={<Applications />} />
+        <Route path='/admin-dashboard' element={<AdminDashboard />} />
 
         {/* ✅ FIXED: Reset route OUTSIDE dashboard */}
         <Route path='/reset-password/:token' element={<ResetPassword />} />

@@ -27,6 +27,9 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex gap-4 items-center max-sm:text-xs">
+            <Link to="/admin-dashboard" className="text-purple-600 font-semibold hover:underline">
+              Admin Panel
+            </Link>
             <button onClick={e => setShowRecruiterLogin(true)} className="text-gray-600">
               Recruiter Login
             </button>

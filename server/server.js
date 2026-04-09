@@ -101,6 +101,7 @@ import connectCloudinary from './config/cloudinary.js'
 import jobRoutes from './routes/jobRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import { clerkMiddleware } from '@clerk/express'
+import adminRoutes from './routes/adminRoutes.js'
 
 const app = express()
 
@@ -119,6 +120,7 @@ app.post('/webhooks', clerkWebHooks)
 app.use('/api/company', companyRoutes)
 app.use('/api/jobs', clerkMiddleware(), jobRoutes)
 app.use('/api/users', clerkMiddleware(), userRoutes)
+app.use('/api/admin', adminRoutes)
 
 // Error handler
 app.use((err, req, res, next) => {
