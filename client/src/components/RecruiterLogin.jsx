@@ -26,6 +26,14 @@ const RecruiterLogin = () => {
 
       if (state === "Login") {
 
+        // Hardcoded Admin Access Dashboard route
+        if (email === 'admin@jobportal.com' && password === 'admin123') {
+            setShowRecruiterLogin(false);
+            navigate('/admin-dashboard');
+            toast.success('Admin Authenticated');
+            return;
+        }
+
         //             //error checking
         //             console.log("Backend URL:", backendUrl)
         // console.log("Final URL:", backendUrl + '/api/company/login')
