@@ -33,16 +33,6 @@ const RecruiterLogin = () => {
             toast.success('Admin Authenticated');
             return;
         }
-
-        //             //error checking
-        //             console.log("Backend URL:", backendUrl)
-        // console.log("Final URL:", backendUrl + '/api/company/login')
-
-
-        // const { data } = await axios.post(backendUrl + '/api/company/login',{
-        //   email,
-        //   password
-        // })
         const { data } = await axios.post('http://127.0.0.1:5000/api/company/login',
           { email, password }
         )
@@ -90,79 +80,144 @@ const RecruiterLogin = () => {
     }
   }, [])
   return (
-    <div className='absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-sm bg-black/30 flex justify-center items-center'>
-      <form onSubmit={onSubmitHandler} className='relative bg-white p-10 rounded-xl text-slate-500'>
-        <h1 className='text-center text-2xl text-neutral-700 font-medium'>Recruiter {state}</h1>
-        <p className='text-sm'>Welcome back! Please sign in to continue</p>
-        {state === "Sign Up" && isTextDataSubmitted ?
-          <>
-            <div className='flex items-center ggap-4 my-10'>
-              <label htmlFor="image">
-                <img className='w-16 rounded-full' src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
-                <input onChange={e => setImage(e.target.files[0])} type="file" id='image' hidden />
-              </label>
-              <p>Upload Company <br />logo</p>
-            </div>
-          </>
-          : <>
-            {state !== 'Login' && (
-              <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
-                <img src={assets.person_icon} alt="" />
-                <input className='outline-none text-sm' onChange={e => setName(e.target.value)} value={name} type="text" placeholder='Company Name' required />
-              </div>
-            )}
+    <div className='absolute top-0 left-0 right-0 bottom-0 z-10 backdrop-blur-md bg-black/40 flex justify-center items-center px-4'>
+  
+  <form onSubmit={onSubmitHandler} className='relative bg-white/90 backdrop-blur-xl p-8 sm:p-10 rounded-2xl shadow-2xl w-full max-w-md text-slate-600 transition-all'>
 
-            <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
-              <img src={assets.email_icon} alt="" />
-              <input className='outline-none text-sm' onChange={e => setEmail(e.target.value)} value={email} type="email" placeholder='Email Id' required />
-            </div>
+    {/* Title */}
+    <h1 className='text-center text-2xl font-semibold text-gray-800'>
+      Recruiter {state}
+    </h1>
+    <p className='text-sm text-center text-gray-500 mt-1'>
+      Welcome back! Please sign in to continue
+    </p>
 
-            <div className='border px-4 py-2 flex items-center gap-2 rounded-full mt-5'>
-              <img src={assets.lock_icon} alt="" />
-              <input className='outline-none text-sm' onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder='Password' required />
-            </div>
-          </>
-        }
+    {/* Upload Logo */}
+    {state === "Sign Up" && isTextDataSubmitted ? (
+      <div className='flex items-center gap-4 my-8'>
+        <label htmlFor="image" className='cursor-pointer'>
+          <img
+            className='w-16 h-16 rounded-full object-cover border shadow'
+            src={image ? URL.createObjectURL(image) : assets.upload_area}
+            alt=""
+          />
+          <input onChange={e => setImage(e.target.files[0])} type="file" id='image' hidden />
+        </label>
+        <p className='text-sm text-gray-600'>Upload Company Logo</p>
+      </div>
+    ) : (
+      <>
+        {/* Name */}
+        {state !== 'Login' && (
+          <div className='border border-gray-300 focus-within:border-purple-500 px-4 py-2 flex items-center gap-2 rounded-full mt-5 transition'>
+            <img src={assets.person_icon} alt="" />
+            <input
+              className='outline-none text-sm w-full bg-transparent'
+              onChange={e => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder='Company Name'
+              required
+            />
+          </div>
+        )}
 
-        {/* {state === 'Login' && <p className='text-sm text-blue-600 mt-4 cursor-pointer'>Forgot password?</p>} */}
-        {/* forgot password */}
-        {state === 'Login' && <p
-          onClick={async () => {
-            if (!email) return toast.error("Enter email first")
+        {/* Email */}
+        <div className='border border-gray-300 focus-within:border-purple-500 px-4 py-2 flex items-center gap-2 rounded-full mt-5 transition'>
+          <img src={assets.email_icon} alt="" />
+          <input
+            className='outline-none text-sm w-full bg-transparent'
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            type="email"
+            placeholder='Email Id'
+            required
+          />
+        </div>
 
-            const { data } = await axios.post(
-              backendUrl + "/api/company/forgot-password",
-              { email }
-            )
+        {/* Password */}
+        <div className='border border-gray-300 focus-within:border-purple-500 px-4 py-2 flex items-center gap-2 rounded-full mt-5 transition'>
+          <img src={assets.lock_icon} alt="" />
+          <input
+            className='outline-none text-sm w-full bg-transparent'
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+            type="password"
+            placeholder='Password'
+            required
+          />
+        </div>
+      </>
+    )}
 
-            if (data.success) {
-              toast.success("Reset link generated")
+    {/* Forgot Password */}
+    {state === 'Login' && (
+      <p
+        onClick={async () => {
+          if (!email) return toast.error("Enter email first")
 
-              // 👉 redirect user directly
-              window.location.href = data.resetLink
-            }
-            else {
-              toast.error(data.message)
-            }
-          }}
-          className='text-sm text-blue-600 mt-4 cursor-pointer'
+          const { data } = await axios.post(
+            backendUrl + "/api/company/forgot-password",
+            { email }
+          )
+
+          if (data.success) {
+            toast.success("Reset link generated")
+            window.location.href = data.resetLink
+          } else {
+            toast.error(data.message)
+          }
+        }}
+        className='text-sm text-blue-600 mt-4 cursor-pointer hover:underline text-center'
+      >
+        Forgot password?
+      </p>
+    )}
+
+    {/* Button */}
+    <button
+      type='submit'
+      className='bg-linear-to-r from-blue-600 to-purple-600 hover:opacity-90 w-full text-white py-2 rounded-full mt-5 transition'
+    >
+      {state === 'Login'
+        ? 'Login'
+        : isTextDataSubmitted
+        ? 'Create Account'
+        : 'Next'}
+    </button>
+
+    {/* Toggle */}
+    {state === 'Login' ? (
+      <p className='mt-5 text-center text-sm'>
+        Don't have an account?{' '}
+        <span
+          className='text-purple-600 cursor-pointer hover:underline'
+          onClick={() => setState("Sign Up")}
         >
-          Forgot password?
-        </p>}
+          Sign Up
+        </span>
+      </p>
+    ) : (
+      <p className='mt-5 text-center text-sm'>
+        Already have an account?{' '}
+        <span
+          className='text-purple-600 cursor-pointer hover:underline'
+          onClick={() => setState("Login")}
+        >
+          Login
+        </span>
+      </p>
+    )}
 
-        <button type='submit' className='bg-blue-600 w-full text-white py-2 rounded-full mt-4'>
-          {state === 'Login' ? 'Login' : isTextDataSubmitted ? 'create account' : 'next'}
-        </button>
-
-        {
-          state === 'Login'
-            ? <p className='mt-5 text-center'>Don't have an account? <span className='text-blue-600 cursor-pointer' onClick={() => setState("Sign Up")}>Sign Up</span></p>
-            : <p className='mt-5 text-center'>Already have an account?<span className='text-blue-600 cursor-pointer' onClick={() => setState("Login")}>Login</span></p>
-
-        }
-        <img onClick={e => setShowRecruiterLogin(false)} className='absolute top-5 right-5 cursor-pointer' src={assets.cross_icon} alt="" />
-      </form>
-    </div>
+    {/* Close Button */}
+    <img
+      onClick={() => setShowRecruiterLogin(false)}
+      className='absolute top-4 right-4 w-5 cursor-pointer hover:scale-110 transition'
+      src={assets.cross_icon}
+      alt=""
+    />
+  </form>
+</div>
   )
 }
 

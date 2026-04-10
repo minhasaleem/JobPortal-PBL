@@ -52,58 +52,96 @@ const AddJob = () => {
   },[])
 
   return (
-    <form onSubmit={onSubmitHandler} className='container p-4 flex flex-col w-full items-start gap-3'>
+    <form onSubmit={onSubmitHandler} className='container px-4 2xl:px-20 mx-auto my-10 flex flex-col items-start gap-6'>
+
+  <div className='w-full bg-white p-6 sm:p-8 rounded-2xl shadow-md border border-gray-100'>
+
+    {/* Title */}
+    <div className='w-full'>
+      <p className='mb-2 font-medium text-gray-700'>Job Title</p>
+      <input
+        onChange={e => setTitle(e.target.value)}
+        value={title}
+        type="text"
+        placeholder='Type here'
+        required
+        className='w-full max-w-lg px-4 py-2.5 border border-gray-300 rounded-lg focus:border-purple-500 outline-none transition'
+      />
+    </div>
+
+    {/* Description */}
+    <div className='w-full max-w-2xl mt-6'>
+      <p className='mb-3 font-medium text-gray-700'>Job Description</p>
+      <div
+        ref={editorRef}
+        className='bg-white border border-gray-300 rounded-lg min-h-37.5 p-2 focus-within:border-purple-500 transition'
+      ></div>
+    </div>
+
+    {/* Dropdowns */}
+    <div className='flex flex-col sm:flex-row gap-4 w-full mt-6'>
 
       <div className='w-full'>
-        <p className='mb-2'>Job Title</p>
-        <input onChange={e => setTitle(e.target.value)}  value={title} type="text" placeholder='Type here' required 
-        className='w-full max-w-lg px-3 py-2 border-2 border-gray-300 rounded'/>
+        <p className='mb-2 font-medium text-gray-700'>Job Category</p>
+        <select
+          className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-purple-500 outline-none transition'
+          onChange={e => setCategory(e.target.value)}
+        >
+          {JobCategories.map((category, index) => (
+            <option key={index} value={category}>{category}</option>
+          ))}
+        </select>
       </div>
 
-      <div className='w-full max-w-lg'> 
-        <p className='my-5'>Job Description</p>
-        <div ref={editorRef}>
-        </div>
+      <div className='w-full'>
+        <p className='mb-2 font-medium text-gray-700'>Job Location</p>
+        <select
+          className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-purple-500 outline-none transition'
+          onChange={e => setLocation(e.target.value)}
+        >
+          {JobLocations.map((location, index) => (
+            <option key={index} value={location}>{location}</option>
+          ))}
+        </select>
       </div>
 
-      <div className='flex flex-col sm:flex-row gap-2 w-full sm:gap-8'>
-        <div>
-          <p className='mb-2'>Job Category</p>
-          <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setCategory(e.target.value)}>
-            {JobCategories.map((category,index)=>(
-              <option key={index} value={category}>{category}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <p className='mb-2'>Job Location</p>
-          <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLocation(e.target.value)}>
-            {JobLocations.map((location,index)=>(
-              <option key={index} value={location}>{location}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <p className='mb-2'>Job Level</p>
-          <select className='w-full px-3 py-2 border-2 border-gray-300 rounded' onChange={e => setLevel(e.target.value)}>
-            <option value="Beginner Level">Beginner Level</option>
-            <option value="Intermediate Level">Intermediate Level</option>
-            <option value="Senior Level">Senior Level</option>
-          </select>
-        </div>
-
+      <div className='w-full'>
+        <p className='mb-2 font-medium text-gray-700'>Job Level</p>
+        <select
+          className='w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-purple-500 outline-none transition'
+          onChange={e => setLevel(e.target.value)}
+        >
+          <option value="Beginner Level">Beginner Level</option>
+          <option value="Intermediate Level">Intermediate Level</option>
+          <option value="Senior Level">Senior Level</option>
+        </select>
       </div>
 
-        <div>
-          <p className='mb-2'>Job Salary</p>
-          <input min={0}  className='w-full px-3 border-2 border-gray-300 rounded sm:w-30' onChange={e =>(setSalary(e.target.value))} type="Number" placeholder='2500'/>
-        </div>
+    </div>
 
-        <button className='w-28 py-3 mt-4 bg-black text-white rounded'>ADD</button>
+    {/* Salary */}
+    <div className='mt-6'>
+      <p className='mb-2 font-medium text-gray-700'>Job Salary</p>
+      <input
+        min={0}
+        className='w-full sm:w-40 px-4 py-2.5 border border-gray-300 rounded-lg focus:border-purple-500 outline-none transition'
+        onChange={e => setSalary(e.target.value)}
+        type="number"
+        placeholder='2500'
+      />
+    </div>
 
-    </form>
+    {/* Button */}
+    <button
+      className='mt-8 px-8 py-3 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition shadow'
+    >
+      Add Job
+    </button>
+
+  </div>
+
+</form>
+
   )
 }
 

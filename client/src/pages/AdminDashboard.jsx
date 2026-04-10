@@ -113,7 +113,7 @@ const AdminDashboard = () => {
                     <tr key={index} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                                <div className="h-10 w-10 flex-shrink-0">
+                                <div className="h-10 w-10 shrink-0">
                                     <img className="h-10 w-10 rounded-full object-cover shadow-sm" src={item.image || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} alt="" />
                                 </div>
                                 <div className="ml-4">
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
                     <tr key={index} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                                <div className="h-8 w-8 flex-shrink-0">
+                                <div className="h-8 w-8 shrink-0">
                                     <img className="h-8 w-8 rounded-full object-cover shadow-sm" src={item.userId?.image || "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} alt="" />
                                 </div>
                                 <div className="ml-3">
@@ -170,7 +170,7 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 font-sans text-gray-800">
+        <div className="min-h-screen bg-linear-to-r from-indigo-50 via-white to-purple-50 font-sans text-gray-800">
             {/* Top Navigation */}
             <div className="shadow-lg py-4 bg-white/80 backdrop-blur-md sticky top-0 z-50">
                 <div className="container px-4 2xl:px-20 mx-auto flex justify-between items-center">
@@ -181,7 +181,7 @@ const AdminDashboard = () => {
                         alt="logo"
                     />
                     <div className="flex items-center gap-4">
-                        <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 tracking-wide">
+                        <span className="font-semibold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 tracking-wide">
                             Admin Portal
                         </span>
                     </div>
@@ -190,7 +190,7 @@ const AdminDashboard = () => {
 
             <main className="container mx-auto px-4 sm:px-8 py-12 md:py-20 lg:py-24">
                 <div className="text-center mb-16 animate-fade-in-up">
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-500 mb-4 tracking-tight">
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-700 via-purple-600 to-pink-500 mb-4 tracking-tight">
                         Platform Overview
                     </h1>
                     <p className="text-lg text-gray-500 max-w-2xl mx-auto font-medium">
@@ -220,7 +220,7 @@ const AdminDashboard = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-indigo-600 transition-colors">Total Users</h3>
+                                <h3 className=" font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-indigo-600 transition-colors">Total Users</h3>
                                 <p className="text-5xl font-black text-gray-900 tracking-tight">{stats.totalUsers.toLocaleString()}</p>
                             </div>
                         </div>
@@ -241,7 +241,7 @@ const AdminDashboard = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-purple-600 transition-colors">Jobs Posted</h3>
+                                <h3 className=" font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-purple-600 transition-colors">Jobs Posted</h3>
                                 <p className="text-5xl font-black text-gray-900 tracking-tight">{stats.totalJobs.toLocaleString()}</p>
                             </div>
                         </div>
@@ -262,7 +262,7 @@ const AdminDashboard = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                     </svg>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-pink-600 transition-colors">Applications</h3>
+                                <h3 className=" font-bold text-gray-700 uppercase tracking-wider text-sm mb-2 opacity-80 mt-4 group-hover:text-pink-600 transition-colors">Applications</h3>
                                 <p className="text-5xl font-black text-gray-900 tracking-tight">{stats.totalApplications.toLocaleString()}</p>
                             </div>
                         </div>

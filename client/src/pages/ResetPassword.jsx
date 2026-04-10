@@ -70,51 +70,66 @@ const ResetPassword = () => {
   }
 
   // ❌ If token invalid
-  if (!validToken) {
-    return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <p className='text-red-500 text-lg'>
+if (!validToken) {
+  return (
+    <div className='flex items-center justify-center min-h-screen bg-gray-50'>
+      <div className='bg-white shadow-md rounded-xl p-8 text-center'>
+        <p className='text-red-500 text-lg font-medium'>
           Invalid or expired reset link
         </p>
       </div>
-    )
-  }
+    </div>
+  )
+}
 
-  return (
-    <div className='flex items-center justify-center min-h-screen bg-gray-100'>
-      <form
-        onSubmit={submitHandler}
-        className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'
-      >
-        <h2 className='text-2xl font-semibold mb-4 text-center'>
-          Reset Password
-        </h2>
+return (
+  <div className='flex items-center justify-center min-h-screen bg-linear-to-r from-blue-50 to-purple-100 px-4'>
 
-        {/* ✅ Show email */}
-        {email && (
-          <p className='text-sm text-gray-500 mb-4 text-center'>
-            Resetting password for: <b>{email}</b>
-          </p>
-        )}
+    <form
+      onSubmit={submitHandler}
+      className='bg-white p-8 sm:p-10 rounded-2xl shadow-lg w-full max-w-md'
+    >
 
+      <h2 className='text-2xl font-semibold text-center text-gray-800 mb-2'>
+        Reset Password
+      </h2>
+
+      <p className='text-sm text-gray-500 text-center mb-6'>
+        Enter your new password below
+      </p>
+
+      {/* Email */}
+      {email && (
+        <p className='text-sm text-gray-500 mb-4 text-center'>
+          Resetting password for: <b className='text-gray-700'>{email}</b>
+        </p>
+      )}
+
+      {/* Input */}
+      <div className='border border-gray-300 px-4 py-2 rounded-lg flex items-center mb-5 focus-within:border-purple-500'>
         <input
           type="password"
           placeholder="Enter new password"
-          className='w-full border px-4 py-2 rounded mb-4 outline-none'
+          className='w-full outline-none text-sm'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+      </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className='w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition'
-        >
-          {loading ? "Updating..." : "Reset Password"}
-        </button>
-      </form>
-    </div>
-  )
+      {/* Button */}
+      <button
+        type="submit"
+        disabled={loading}
+        className='w-full bg-linear-to-r from-blue-600 to-purple-600 
+        hover:opacity-90 transition text-white py-2 rounded-lg shadow'
+      >
+        {loading ? "Updating..." : "Reset Password"}
+      </button>
+
+    </form>
+  </div>
+)
+
 }
 
 export default ResetPassword
