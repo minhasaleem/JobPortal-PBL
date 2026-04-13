@@ -13,7 +13,7 @@ const RecruiterLogin = () => {
   const [email, setEmail] = useState('')
   const [image, setImage] = useState(false)
   const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false)
-  const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData } = useContext(AppContext)
+  const { setShowRecruiterLogin, backendUrl, setCompanyToken, setCompanyData, setAdminToken } = useContext(AppContext)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
@@ -26,11 +26,18 @@ const RecruiterLogin = () => {
 
       if (state === "Login") {
 
-        // Hardcoded Admin Access Dashboard route
-        if (email === 'admin@jobportal.com' && password === 'admin123') {
-            setShowRecruiterLogin(false);
-            navigate('/admin-dashboard');
-            toast.success('Admin Authenticated');
+        // Admin Access Dashboard route
+        if (email === 'admin@jobportal.com') {
+            const { data } = await axios.post(backendUrl + '/api/admin/login', { email, password });
+            if (data.success) {
+                setAdminToken(data.token);
+                localStorage.setItem('adminToken', data.token);
+                setShowRecruiterLogin(false);
+                navigate('/admin-dashboard');
+                toast.success('Admin Authenticated');
+            } else {
+                toast.error(data.message);
+            }
             return;
         }
         const { data } = await axios.post('http://127.0.0.1:5000/api/company/login',

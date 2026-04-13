@@ -17,6 +17,7 @@ export const AppContextProvider = (props) => {
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
   const [companyToken, setCompanyToken] = useState(null);
   const [companyData, setCompanyData] = useState(null);
+  const [adminToken, setAdminToken] = useState(null);
 
   const [userData, setUserData] = useState(null);
   const [userLoading, setUserLoading] = useState(true); // 🔹 added
@@ -85,11 +86,14 @@ export const AppContextProvider = (props) => {
     }
   }
 
-  // Load jobs and company token on mount
+  // Load jobs and tokens on mount
   useEffect(() => {
     fetchJobs();
     const storedCompanyToken = localStorage.getItem('companyToken');
     if (storedCompanyToken) setCompanyToken(storedCompanyToken);
+    
+    const storedAdminToken = localStorage.getItem('adminToken');
+    if (storedAdminToken) setAdminToken(storedAdminToken);
   }, []);
 
   // Fetch company data when companyToken changes
@@ -117,6 +121,8 @@ export const AppContextProvider = (props) => {
     setCompanyToken,
     companyData,
     setCompanyData,
+    adminToken,
+    setAdminToken,
     backendUrl,
     userData,
     setUserData,

@@ -1,6 +1,25 @@
 import Job from '../models/Job.js';
 import JobApplication from '../models/JobApplication.js';
 import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+
+export const loginAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_SECRET);
+            // using process.env.ADMIN_EMAIL as payload for token verification
+            const token_admin = jwt.sign(process.env.ADMIN_EMAIL, process.env.JWT_SECRET);
+            res.json({success: true, token: token_admin});
+        } else {
+            res.json({success: false, message: "Invalid Credentials"});
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({success: false, message: error.message});
+    }
+}
 
 export const getAdminStats = async (req, res) => {
     try {

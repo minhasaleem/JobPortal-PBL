@@ -6,7 +6,7 @@ import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
-    const { backendUrl } = useContext(AppContext);
+    const { backendUrl, adminToken, setAdminToken } = useContext(AppContext);
     const [stats, setStats] = useState({ totalJobs: 0, totalApplications: 0, totalUsers: 0 });
     const [loading, setLoading] = useState(true);
     
@@ -18,9 +18,16 @@ const AdminDashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!adminToken) {
+            navigate('/');
+            return;
+        }
+
         const fetchAdminStats = async () => {
             try {
-                const { data } = await axios.get(`${backendUrl}/api/admin/stats`);
+                const { data } = await axios.get(`${backendUrl}/api/admin/stats`, {
+                    headers: { admin_token: adminToken }
+                });
                 if (data.success) {
                     setStats(data.stats);
                 } else {
@@ -35,7 +42,7 @@ const AdminDashboard = () => {
         };
 
         fetchAdminStats();
-    }, [backendUrl]);
+    }, [backendUrl, adminToken, navigate]);
 
     const handleCardClick = async (type) => {
         // Toggle off if already active
@@ -48,7 +55,9 @@ const AdminDashboard = () => {
         setActiveTab(type);
         setListLoading(true);
         try {
-            const { data } = await axios.get(`${backendUrl}/api/admin/${type}`);
+            const { data } = await axios.get(`${backendUrl}/api/admin/${type}`, {
+                headers: { admin_token: adminToken }
+            });
             if (data.success) {
                 setListData(data[type]);
             } else {
@@ -181,9 +190,19 @@ const AdminDashboard = () => {
                         alt="logo"
                     />
                     <div className="flex items-center gap-4">
-                        <span className="font-semibold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 tracking-wide">
+                        <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 tracking-wide">
                             Admin Portal
                         </span>
+                        <button 
+                            onClick={() => {
+                                setAdminToken(null);
+                                localStorage.removeItem('adminToken');
+                                navigate('/');
+                            }}
+                            className="bg-red-50 text-red-600 px-4 py-2 rounded-full font-medium text-sm hover:bg-red-100 transition-colors"
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
             </div>

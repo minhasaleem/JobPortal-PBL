@@ -1,11 +1,13 @@
 import express from 'express';
-import { getAdminStats, getAdminUsers, getAdminJobs, getAdminApplications } from '../controllers/adminController.js';
+import { getAdminStats, getAdminUsers, getAdminJobs, getAdminApplications, loginAdmin } from '../controllers/adminController.js';
+import { authAdmin } from '../middlewares/authAdmin.js';
 
 const router = express.Router();
 
-router.get('/stats', getAdminStats);
-router.get('/users', getAdminUsers);
-router.get('/jobs', getAdminJobs);
-router.get('/applications', getAdminApplications);
+router.post('/login', loginAdmin);
+router.get('/stats', authAdmin, getAdminStats);
+router.get('/users', authAdmin, getAdminUsers);
+router.get('/jobs', authAdmin, getAdminJobs);
+router.get('/applications', authAdmin, getAdminApplications);
 
 export default router;
