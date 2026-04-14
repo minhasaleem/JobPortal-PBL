@@ -27,7 +27,8 @@ const App = () => {
       <ToastContainer />
 
       {/* ✅ SHOW NAVBAR ONLY FOR NON-ADMIN */}
-      {!location.pathname.startsWith('/admin-dashboard') && <Navbar />}
+      {!location.pathname.startsWith('/admin-dashboard') &&
+        !location.pathname.startsWith('/dashboard') && <Navbar />}
 
       <Routes>
         <Route path='/' element={<Home />} />

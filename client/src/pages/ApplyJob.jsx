@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import Loading from '../components/Loading'
-import Navbar from '../components/Navbar'
+// import Navbar from '../components/Navbar'
 import { assets} from '../assets/assets'
 import kconvert from 'k-convert';
 import moment from 'moment'
@@ -101,7 +101,7 @@ const applyHandler = async () => {
 
   return (
   <>
-    <Navbar />
+    {/* <Navbar /> */}
 
     <div className='min-h-screen flex flex-col py-10 container px-4 2xl:px-20 mx-auto'>
 

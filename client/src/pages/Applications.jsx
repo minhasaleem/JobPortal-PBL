@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
+// import Navbar from '../components/Navbar'
 import { assets } from '../assets/assets'
 import moment from 'moment'
 import Footer from '../components/Footer'
@@ -109,7 +109,7 @@ const Applications = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div className='container px-4 2xl:px-20 mx-auto my-10 min-h-[65vh]'>
 
