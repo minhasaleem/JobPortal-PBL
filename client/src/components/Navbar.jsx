@@ -28,8 +28,8 @@ const Navbar = () => {
         {user ? (
           <div className='flex items-center gap-4'>
 
-            <Link 
-              to="/applications" 
+            <Link
+              to="/applications"
               className="font-semibold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 hover:opacity-80 transition"
             >
               Applied Jobs
@@ -45,20 +45,20 @@ const Navbar = () => {
         ) : (
           <div className="flex gap-4 items-center max-sm:text-xs">
 
-            <Link 
-              to="/admin-dashboard" 
-              className="text-purple-600 font-semibold hover:text-purple-700 transition"
+            {/* ✅ Unified Login for Admin + Recruiter */}
+            <button
+              onClick={() => setShowRecruiterLogin(true)}
+              className="relative px-5 py-2 rounded-full font-semibold text-purple-600 
+  border border-purple-200 bg-white/60 backdrop-blur-md
+  hover:bg-linear-to-r hover:from-purple-600 hover:to-indigo-600
+  hover:text-white hover:border-transparent
+  transition-all duration-300 ease-in-out
+  shadow-sm hover:shadow-lg hover:scale-105"
             >
-              Admin Panel
-            </Link>
-
-            <button 
-              onClick={() => setShowRecruiterLogin(true)} 
-              className="text-purple-600 font-semibold hover:text-purple-700 transition"
-            >
-              Recruiter Login
+              Dashboard Login
             </button>
 
+            {/* ✅ Normal User Login */}
             <button
               type="button"
               onClick={() => openSignIn()}
