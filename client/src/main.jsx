@@ -1,5 +1,5 @@
-// console.log('ENV CHECK:', import.meta.env)
-// console.log('Clerk key:', import.meta.env.VITE_CLERK_PUBLISHABLE_KEY)
+console.log('ENV CHECK:', import.meta.env)
+console.log('Clerk key:', import.meta.env.VITE_CLERK_PUBLISHABLE_KEY)
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
@@ -25,3 +25,4 @@ createRoot(document.getElementById('root')).render(
   </BrowserRouter>
     </ClerkProvider>  
 )
+
