@@ -76,7 +76,7 @@
 <summary><b>🏠 Home Page</b></summary>
 <br/>
 <p align="center">
-  <img src="../1.png" alt="Home Page" width="800" />
+  <img src="Screenshorts/1.png" alt="Home Page" width="800" />
 </p>
 Hero section with job search, trusted company logos, category filters, and latest job listings.
 </details>
@@ -85,7 +85,7 @@ Hero section with job search, trusted company logos, category filters, and lates
 <summary><b>🔐 User Login (Clerk)</b></summary>
 <br/>
 <p align="center">
-  <img src="../2.png" alt="User Login" width="800" />
+  <img src="Screenshorts/2.png" alt="User Login" width="800" />
 </p>
 Sign in with Google or email via Clerk authentication.
 </details>
@@ -94,7 +94,7 @@ Sign in with Google or email via Clerk authentication.
 <summary><b>🏢 Recruiter / Dashboard Login</b></summary>
 <br/>
 <p align="center">
-  <img src="../3.png" alt="Recruiter Login" width="800" />
+  <img src="Screenshorts/3.png" alt="Recruiter Login" width="800" />
 </p>
 Company login modal with email, password, and forgot password functionality.
 </details>
@@ -103,7 +103,7 @@ Company login modal with email, password, and forgot password functionality.
 <summary><b>📋 Applications Tracker</b></summary>
 <br/>
 <p align="center">
-  <img src="../4.png" alt="Applications" width="800" />
+  <img src="Screenshorts/4.png" alt="Applications" width="800" />
 </p>
 Job seekers can track all their applications with real-time status updates.
 </details>
@@ -112,7 +112,7 @@ Job seekers can track all their applications with real-time status updates.
 <summary><b>📈 Admin Dashboard</b></summary>
 <br/>
 <p align="center">
-  <img src="../5.png" alt="Admin Dashboard" width="800" />
+  <img src="Screenshorts/5.png" alt="Admin Dashboard" width="800" />
 </p>
 Platform overview with total users, jobs posted, and applications — with drill-down details.
 </details>
@@ -121,7 +121,7 @@ Platform overview with total users, jobs posted, and applications — with drill
 <summary><b>📊 Recruiter — Manage Jobs</b></summary>
 <br/>
 <p align="center">
-  <img src="../6.png" alt="Manage Jobs" width="800" />
+  <img src="Screenshorts/6.png" alt="Manage Jobs" width="800" />
 </p>
 View all posted jobs, toggle visibility, and see applicant counts.
 </details>
@@ -130,7 +130,7 @@ View all posted jobs, toggle visibility, and see applicant counts.
 <summary><b>➕ Recruiter — Add Job</b></summary>
 <br/>
 <p align="center">
-  <img src="../7.png" alt="Add Job" width="800" />
+  <img src="Screenshorts/7.png" alt="Add Job" width="800" />
 </p>
 Rich-text job posting form with category, location, level, and salary fields.
 </details>
@@ -139,7 +139,7 @@ Rich-text job posting form with category, location, level, and salary fields.
 <summary><b>📄 Job Details & Apply</b></summary>
 <br/>
 <p align="center">
-  <img src="../8.png" alt="Job Details" width="800" />
+  <img src="Screenshorts/8.png" alt="Job Details" width="800" />
 </p>
 Detailed job view with description, responsibilities, skills, and related jobs sidebar.
 </details>
